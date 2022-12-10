@@ -2,6 +2,7 @@
     <string name="app_name">Password Manager</string>
     <string name="button_addPassword">Add Password</string>
     <string name="hint_passwordTitle">Password Title</string>
+    <string name="hint_passwordPassword">Password</string>
     <string name="hint_passwordDescription">Description </string>
     <string name="menu_addPassword">Add</string>
     <string name="menu_cancelPassword">Cancel</string>
@@ -22,5 +23,4 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="sign_in">Sign In</string>
 </resources>
