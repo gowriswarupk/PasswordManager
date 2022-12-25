@@ -9,12 +9,16 @@
     <string name="enter_password_title"> Please enter a Password Title </string>
     <string name="save_password"> Save Password </string>
     <string name="button_addImage"> Add Image </string>
+    <string name="button_camera">Camera</string>
+
     <string name="select_password_image">Select password image</string>
     <string name="change_password_image">Change password image</string>
+
     <string name="button_location">Set Location</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="menu_deletePassword">Delete</string>
     <string name="title_activity_password_maps">Map of All Passwords </string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

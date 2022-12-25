@@ -17,7 +17,7 @@ A password manager app (Kotlin) with store/retrieve passwords for Mobile App Dev
 Features required:
 
 - [x]  Persistence (Local JSON filesave + Firebase Realtime Database)
-- [x]  Fields req: Title, Password (w/ privacy toggle), Desc (for backup codes etc.), Image, Maps (I KNOW, but people Love to remember where they were when they decided on a password apparently /s)
+- [x]  Fields req: Title, Password (w/ privacy toggle), Desc (for backup codes etc.), Image (with camera support), Maps (I KNOW, but people Love to remember where they were when they decided on a password apparently /s)
 - [x]  Google Auth Login
 - [ ]  Password generator
 - [ ]  Swipe Gesture for Delete + cancel 
