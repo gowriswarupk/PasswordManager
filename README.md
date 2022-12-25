@@ -1,17 +1,19 @@
 # Password Manager - Mobile App Development Assignment2
 
 Name: Gowriswarup Kailas Perumal
+
 20087165
 
 ## Overview.
 
-A password manager app (Kotlin) with to store/retrieve passwords for Mobile App Development Assignment 2
+A password manager app (Kotlin) with store/retrieve passwords for Mobile App Development Assignment 2
 
 ### Features.
 
 [ A bullet-point list of the __new features__ implemented on the Kotlin Project (and any modifications to existing features) .]
 
 ----TEMP Line---
+
 Features required:
 
 - [x]  Persistence (Local JSON filesave + Firebase Realtime Database)
@@ -26,7 +28,7 @@ Error Handling and notifications for Cloud Storage as well as error messages, al
 To run the app locally, clone the repo thus:
 
 ```
-git clone git@github.com:gowriswarupk/PasswordManager.git
+    git clone git@github.com:gowriswarupk/PasswordManager.git
 ```
 Open in your preferred IDE, Android Studio used in production.
 
@@ -36,7 +38,8 @@ Required for optimal runtime:
 
 Google Maps API Key 
 * add the following line to local.properties file:
-    ```MAPS_API_KEY= <<<Your KEY here>>>
+    ```
+    MAPS_API_KEY= <<<Your KEY here>>>
     ```
   
 To add firebase config, on the menu, go to Tools > Firebase to open Assistant and follow prompts. 
