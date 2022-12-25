@@ -55,6 +55,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-common-ktx:20.2.0'
     testImplementation 'junit:junit:4.13.2'
 
+    //recycler view for swipe gesture
+    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
+
     //User Permission checks
     implementation 'com.karumi:dexter:6.2.2'
 
