@@ -48,6 +48,13 @@ To add firebase config, on the menu, go to Tools > Firebase to open Assistant an
 ![Screenshot 2022-12-25 at 06 26 06](https://user-images.githubusercontent.com/58232821/209458919-54f4edd1-3c9b-4aed-8c72-2528ba0d2906.png)
 ![Screenshot 2022-12-25 at 06 26 20](https://user-images.githubusercontent.com/58232821/209458923-05d45720-3c55-4216-b45a-3d37c8f11250.png)
 
+
+Firebase official Documentation
+
+Realtime Database config: https://firebase.google.com/docs/database/android/start?hl=en&authuser=0
+
+Google Auth : https://firebase.google.com/docs/auth/android/google-signin?hl=en&authuser=0
+
 ### Component catalogue.
 
 [ Insert a screenshot from the UI that lists all the different placemarks and categories if required.]
