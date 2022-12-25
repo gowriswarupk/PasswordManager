@@ -40,6 +40,8 @@ Google Maps API Key
     ```
   
 To add firebase config, on the menu, go to Tools > Firebase to open Assistant and follow prompts. 
+
+
 ![Screenshot 2022-12-25 at 06 26 06](https://user-images.githubusercontent.com/58232821/209458919-54f4edd1-3c9b-4aed-8c72-2528ba0d2906.png)
 ![Screenshot 2022-12-25 at 06 26 20](https://user-images.githubusercontent.com/58232821/209458923-05d45720-3c55-4216-b45a-3d37c8f11250.png)
 
@@ -48,6 +50,8 @@ To add firebase config, on the menu, go to Tools > Firebase to open Assistant an
 [ Insert a screenshot from the UI that lists all the different placemarks and categories if required.]
 
 ### UI Design.
+
+
 ![Screenshot 2022-12-25 at 06 22 11](https://user-images.githubusercontent.com/58232821/209458837-69eb7e95-9bb7-4b0b-b555-3b0c7ce4bb25.png)
 ![Screenshot 2022-12-25 at 06 23 17](https://user-images.githubusercontent.com/58232821/209458858-223f2f25-b849-44a0-b904-6c4171289a16.png)
 ![Screenshot 2022-12-25 at 06 24 51](https://user-images.githubusercontent.com/58232821/209458893-5c8e53e6-963b-41ae-8dd4-3ea2ddf73c54.png)
