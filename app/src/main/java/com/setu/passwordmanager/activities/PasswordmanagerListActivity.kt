@@ -5,15 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.setu.passwordmanager.R
 import com.setu.passwordmanager.adapters.PasswordmanagerAdapter
 import com.setu.passwordmanager.adapters.PasswordmanagerListener
 import com.setu.passwordmanager.databinding.ActivityPasswordmanagerListBinding
 import com.setu.passwordmanager.main.MainApp
+import com.setu.passwordmanager.models.PasswordmanagerJSONStore
 import com.setu.passwordmanager.models.PasswordmanagerModel
 
 class PasswordmanagerListActivity : AppCompatActivity(), PasswordmanagerListener {
@@ -21,16 +25,14 @@ class PasswordmanagerListActivity : AppCompatActivity(), PasswordmanagerListener
     lateinit var app: MainApp
     private lateinit var binding: ActivityPasswordmanagerListBinding
     private var position: Int = 0
+    var passwordmanager = PasswordmanagerModel()
+    private lateinit var database: DatabaseReference
 
-    //swipe to delete/undo
-    // TODO
-//    lateinit var passwordmanagerRV: RecyclerView
-//    lateinit var passwordmanagerAdapter: PasswordmanagerAdapter
-//    lateinit var passwordmanagerList: ArrayList<PasswordmanagerModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPasswordmanagerListBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
@@ -40,7 +42,46 @@ class PasswordmanagerListActivity : AppCompatActivity(), PasswordmanagerListener
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = PasswordmanagerAdapter(app.passwordmanagers.findAll(), this)
+
+        //swipeGesture working!
+        val swipeGesture = object : SwipeGesture() {
+            override fun onSwiped(
+                viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+                direction: Int
+            ) {
+                when (direction) {
+                    ItemTouchHelper.LEFT -> {
+                        val position = viewHolder.adapterPosition
+//                        Todo  exception handling
+                        passwordmanager =
+                            (app.passwordmanagers as PasswordmanagerJSONStore).passwordmanagers[position]
+                        app.passwordmanagers.delete(passwordmanager)
+                        (binding.recyclerView.adapter)?.notifyItemRemoved(position)
+
+                        database = FirebaseDatabase.getInstance().getReference("passwords")
+                        database.child(passwordmanager.id.toString()).removeValue()
+                            .addOnSuccessListener {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Password Deleted from DB",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                            }.addOnFailureListener {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Sorry, Password deletion from DB failed -Key20087165",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                    }
+                }
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeGesture)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
@@ -99,22 +140,5 @@ class PasswordmanagerListActivity : AppCompatActivity(), PasswordmanagerListener
                 if (it.resultCode == 99)
                     (binding.recyclerView.adapter)?.notifyItemRemoved(position)
         }
-
-
-    val adapter = PasswordmanagerAdapter(passwordmanagers = List<PasswordmanagerModel>)
-
-    val swipeGesture = object : SwipeGesture() {
-        override fun onSwiped(viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder, direction: Int)
-        {
-            when(direction){
-                    adapter.deleteItem(viewHolder.adapterPosition)
-        }
-    }
-    val itemTouchHelper = ItemTouchHelper(swipeGesture)
-    itemTouchHelper.attachToRecyclerView(newRecyclerView)
-
-    newRecyclerView.adapter = adapter
-
-}
 
 }

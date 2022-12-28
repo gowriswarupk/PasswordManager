@@ -63,7 +63,6 @@ class PasswordmanagerActivity : AppCompatActivity() {
 
         i("Password Manager Activity started...")
 
-
         //Password Text field with editable entity
         if (intent.hasExtra("password_edit")) {
             edit = true
@@ -72,13 +71,10 @@ class PasswordmanagerActivity : AppCompatActivity() {
             binding.passwordEdit.setText(passwordmanager.password)
             binding.description.setText(passwordmanager.description)
             binding.btnAdd.setText(R.string.save_password)
-            Picasso.get()
-                .load(passwordmanager.image)
-                .into(binding.passwordImage)
+            Picasso.get().load(passwordmanager.image).into(binding.passwordImage)
             if (passwordmanager.image != Uri.EMPTY) {
                 binding.chooseImage.setText(R.string.change_password_image)
             }
-
         }
 
         //On Button Click Actions
@@ -93,47 +89,41 @@ class PasswordmanagerActivity : AppCompatActivity() {
             passwordmanager.password = binding.passwordEdit.text.toString()
             passwordmanager.description = binding.description.text.toString()
             if (passwordmanager.title.isEmpty()) {
-                Snackbar.make(it, R.string.enter_password_title, Snackbar.LENGTH_LONG)
-                    .show()
+                Snackbar.make(it, R.string.enter_password_title, Snackbar.LENGTH_LONG).show()
             } else {
                 if (edit) {
-                    //log message to check progess and locate error
+                    //log message to check progress and locate error
                     i("ID value for edit: " + passwordmanager.id)
+
+                    //Local Save
+                    app.passwordmanagers.update(passwordmanager.copy())
 
                     //create Hashmap for sending to Cloud Storage w/ structure
                     val PasswordmanagerModel = HashMap<String, Any>()
                     PasswordmanagerModel["id"] = passwordmanager.id
                     PasswordmanagerModel["title"] = passwordmanager.title
                     PasswordmanagerModel["password"] = passwordmanager.password
-                    PasswordmanagerModel["desc"] = passwordmanager.description
+                    PasswordmanagerModel["description"] = passwordmanager.description
 
                     //database Reference in firebase realtime database
                     database = FirebaseDatabase.getInstance().getReference("passwords")
-
                     database.child(passwordmanager.id.toString()).setValue(PasswordmanagerModel)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Password Updated to DB", Toast.LENGTH_SHORT)
                                 .show()
                         }.addOnFailureListener {
                             Toast.makeText(
-                                this,
-                                "Sorry, Password update failed",
-                                Toast.LENGTH_SHORT
+                                this, "Sorry, Password update failed", Toast.LENGTH_SHORT
                             ).show()
                         }
-                    //Local Save
-                    app.passwordmanagers.update(passwordmanager.copy())
-                    i("Atleast local worked?: " + passwordmanager.id)
-
                 } else {
-                    i("cloud save started " + passwordmanager.id)
+                    i("Cloud save started for " + passwordmanager.id)
                     database = FirebaseDatabase.getInstance().getReference("passwords")
                     val PasswordmanagerModel = HashMap<String, Any>()
                     PasswordmanagerModel["id"] = passwordmanager.id
                     PasswordmanagerModel["title"] = passwordmanager.title
                     PasswordmanagerModel["password"] = passwordmanager.password
-                    PasswordmanagerModel["desc"] = passwordmanager.description
-
+                    PasswordmanagerModel["description"] = passwordmanager.description
 
                     database.child(passwordmanager.id.toString()).setValue(PasswordmanagerModel)
                         .addOnSuccessListener {
@@ -147,7 +137,6 @@ class PasswordmanagerActivity : AppCompatActivity() {
                 }
             }
             i("add Button Pressed: $passwordmanager")
-
             setResult(RESULT_OK)
             finish()
         }
@@ -170,8 +159,8 @@ class PasswordmanagerActivity : AppCompatActivity() {
                 location.lng = passwordmanager.lng
                 location.zoom = passwordmanager.zoom
             }
-            val launcherIntent = Intent(this, MapActivity::class.java)
-                .putExtra("location", location)
+            val launcherIntent =
+                Intent(this, MapActivity::class.java).putExtra("location", location)
             mapIntentLauncher.launch(launcherIntent)
         }
         registerImagePickerCallback()
@@ -188,21 +177,20 @@ class PasswordmanagerActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.item_delete -> {
                 setResult(99)
-                //Delete Cloud saved counterparts
-                database = FirebaseDatabase.getInstance().getReference("passwords")
-                database.child(passwordmanager.id.toString()).removeValue()
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "Password Deleted from DB", Toast.LENGTH_SHORT)
-                            .show()
-                    }.addOnFailureListener {
-                        Toast.makeText(
-                            this,
-                            "Sorry, Password deletion from DB failed -Key20087165",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
                 //Local save deleted
                 app.passwordmanagers.delete(passwordmanager)
+
+                //Delete Cloud saved counterparts
+                database = FirebaseDatabase.getInstance().getReference("passwords")
+                database.child(passwordmanager.id.toString()).removeValue().addOnSuccessListener {
+                    Toast.makeText(this, "Password Deleted from DB", Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener {
+                    Toast.makeText(
+                        this,
+                        "Sorry, Password deletion from DB failed -Key20087165",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
                 finish()
             }
             R.id.item_cancel -> {
@@ -213,8 +201,8 @@ class PasswordmanagerActivity : AppCompatActivity() {
     }
 
     private fun cameraCheckPermission() {
-        Dexter.withContext(this).withPermission(android.Manifest.permission.CAMERA).withListener(
-            object : PermissionListener {
+        Dexter.withContext(this).withPermission(android.Manifest.permission.CAMERA)
+            .withListener(object : PermissionListener {
                 override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
                     camera()
                 }
@@ -224,14 +212,12 @@ class PasswordmanagerActivity : AppCompatActivity() {
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
-                    p0: PermissionRequest?,
-                    p1: PermissionToken?
+                    p0: PermissionRequest?, p1: PermissionToken?
                 ) {
                     showRorationalDialogForPermissions()
                 }
 
-            }
-        ).onSameThread().check()
+            }).onSameThread().check()
 
     }
 
@@ -259,8 +245,7 @@ class PasswordmanagerActivity : AppCompatActivity() {
     }
 
     private fun showRorationalDialogForPermissions() {
-        AlertDialog.Builder(this)
-            .setMessage("Please allow for application to use camera feature")
+        AlertDialog.Builder(this).setMessage("Please allow for application to use camera feature")
             .setPositiveButton("Go to settings") { _, _ ->
                 try {
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
@@ -270,29 +255,24 @@ class PasswordmanagerActivity : AppCompatActivity() {
                 } catch (e: ActivityNotFoundException) {
                     e.printStackTrace()
                 }
-            }
-            .setNegativeButton("CANCEL") { dialog, _ ->
+            }.setNegativeButton("CANCEL") { dialog, _ ->
                 dialog.dismiss()
             }.show()
     }
 
     private fun registerImagePickerCallback() {
         imageIntentLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { result ->
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 when (result.resultCode) {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
                             val image = result.data!!.data!!
                             contentResolver.takePersistableUriPermission(
-                                image,
-                                Intent.FLAG_GRANT_READ_URI_PERMISSION
+                                image, Intent.FLAG_GRANT_READ_URI_PERMISSION
                             )
                             passwordmanager.image = image
-                            Picasso.get()
-                                .load(passwordmanager.image)
-                                .into(binding.passwordImage)
+                            Picasso.get().load(passwordmanager.image).into(binding.passwordImage)
                             binding.chooseImage.setText(R.string.change_password_image)
                         }
                     }
@@ -304,8 +284,7 @@ class PasswordmanagerActivity : AppCompatActivity() {
 
     private fun registerMapCallback() {
         mapIntentLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { result ->
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 when (result.resultCode) {
                     RESULT_OK -> {
                         if (result.data != null) {
@@ -323,6 +302,4 @@ class PasswordmanagerActivity : AppCompatActivity() {
                 }
             }
     }
-
-
 }

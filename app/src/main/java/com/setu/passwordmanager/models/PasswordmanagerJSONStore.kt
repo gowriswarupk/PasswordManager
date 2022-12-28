@@ -74,6 +74,11 @@ class PasswordmanagerJSONStore(private val context: Context) : PasswordmanagerSt
         serialize()
     }
 
+    override fun findOne(passwordmanager: PasswordmanagerModel) {
+        passwordmanager.id = getId()
+        passwordmanagers.get(passwordmanager.id.toInt())
+    }
+
     private fun logAll() {
         passwordmanagers.forEach { Timber.i("$it") }
     }

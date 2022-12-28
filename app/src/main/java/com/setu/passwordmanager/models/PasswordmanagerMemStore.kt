@@ -44,4 +44,9 @@ class PasswordmanagerMemStore : PasswordmanagerStore {
     override fun delete(passwordmanager: PasswordmanagerModel) {
         passwordmanagers.remove(passwordmanager)
     }
+
+    override fun findOne(passwordmanager: PasswordmanagerModel) {
+        passwordmanager.id = getId()
+        passwordmanagers.get(passwordmanager.id.toInt())
+    }
 }
