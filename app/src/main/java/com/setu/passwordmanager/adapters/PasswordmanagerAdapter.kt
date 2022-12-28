@@ -24,13 +24,6 @@ class PasswordmanagerAdapter constructor(
         return MainHolder(binding)
     }
 
-    fun delete(parent: ViewGroup, viewType: Int): MainHolder {
-        val binding = CardPasswordmanagerBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
-
-        return MainHolder(binding)
-    }
-
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val passwordmanager = passwordmanagers[holder.adapterPosition]
         holder.bind(passwordmanager, listener)
